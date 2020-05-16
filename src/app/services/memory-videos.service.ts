@@ -32,18 +32,25 @@ country: 'ES'
         type:'local',
         url:'http://loquesea.com',
         title:'Titulo de pruebaa',
-        description:'descripcon del vudeo que vamos a ver',
-        thumbnail: {
-          url: 'holauqesa.com',
-          width:100,
-          height:150,
-        },
+        description:'descripción del vudeo que vamos a ver',
+        
         tags:'video, gracioso, aniversario',
         duration:'30seg',
         date:'25/febrero/2020',
         width:450,
-        height:320,
-
+       
+      },
+      {
+        id:'ewrwewe',
+        type:'local',
+        url:'http://loquesea.com',
+        title:'video dos',
+        description:'que es lo que vamos a ver',
+        
+        tags:'video, gracioso, aniversario',
+        duration:'30seg',
+        date:'25/febrero/2020',
+        width:450,
        
       }
     )

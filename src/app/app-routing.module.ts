@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'playlists',
     loadChildren: () => import('./playlists/playlists.module').then( m => m.PlaylistsPageModule)
+  },
+  {
+    path: 'video-editor',
+    loadChildren: () => import('./video-editor/video-editor.module').then( m => m.VideoEditorPageModule)
   }
 ];
 @NgModule({
