@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Video } from '../models/video';
 import { VideosService } from '../services/videos.service';
-import { AlertController,ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
+import { VideoPlayerPage } from '../video-player/video-player.page';
 
 @Component({
   selector: 'app-my-videos',
@@ -15,8 +16,9 @@ export class MyVideosPage implements OnInit {
   private query = '';
   public myVideos: Video[] = [];
 
-  constructor(private modalCtrl: ModalController,private camera: Camera,
-          private alertCtrl: AlertController,private videos: VideosService) { }
+  constructor(private modalCtrl: ModalController, private camera: Camera,
+    private alertCtrl: AlertController, private videos: VideosService,
+    private actionSheetCtrl: ActionSheetController, private changes: ChangeDetectorRef) { }
 
   ngOnInit() {
     console.log('ngOnInit MyVideosPage');
@@ -27,7 +29,13 @@ export class MyVideosPage implements OnInit {
     console.log('[MyVideosPage] searchVideos()');
     let query = evt ? evt.target.value.trim() : this.query;
     this.videos.findVideos(query)
-      .then((videos) => this.myVideos = videos);
+      .then((videos) => {
+        this.myVideos = videos
+        console.log('[MyVideosPage] searchVideos() => ' +
+          JSON.stringify(this.myVideos));
+        this.changes.detectChanges();
+      });
+
   }
 
   async enterVideo() {
@@ -55,6 +63,7 @@ export class MyVideosPage implements OnInit {
   }
 
   selectVideo() {
+    //https://stackoverflow.com/questions/55353840/cordova-how-to-access-device-storage
     console.log('[MyVideosPage] selectVideo()');
     const options: CameraOptions = {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -151,6 +160,86 @@ export class MyVideosPage implements OnInit {
       videoNode.src = url;
     });
   }//end read
+
+  showMenu(video) {
+    this.actionSheetCtrl.create({
+      buttons: [
+        {
+          text: 'Play',
+          icon: 'play',
+          handler: () => {
+            console.log('Play video');
+            this.playVideo(video);
+          }
+        },
+        {
+          text: 'Edit',
+          icon: 'create',
+          handler: () => {
+            console.log('Edit video!!');
+            this.editVideo(video);
+          }
+        },
+        {
+          text: 'Delete',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete video!!');
+            this.deleteVideo(video);
+          }
+
+        }, // delete
+
+      ]
+    }).then((actionSheet) => actionSheet.present());
+  } //showmenu
+
+  editVideo(video: Video) {
+    console.log(`[MyVideosPage] editVideo(${video.id})`);
+    this.modalCtrl.create({
+      component: VideoEditorPage,
+      componentProps: { mode: 'edit', video: video }
+    })
+      .then((modal) => {
+        modal.onDidDismiss()
+          .then((evt: OverlayEventDetail) => {
+            if (evt && evt.data) {
+              this.videos.updateVideo(evt.data)
+                .then(() => this.searchVideos());
+            }
+          });
+        modal.present();
+      });
+  }//edit video
+
+  playVideo(video: Video) {
+    console.log(`[MyVideosPage] playVideo(${video.id})`);
+    this.modalCtrl.create({
+      component: VideoPlayerPage,
+      componentProps: { video: video }
+    }).then((modal) => modal.present());
+  }
+
+  deleteVideo(video: Video) {
+    console.log(`[MyVideosPage] deleteVideo(${video.id})`);
+    this.alertCtrl.create({
+      header: 'Delete video',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel', role: 'cancel', handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Accept', handler: () => {
+            this.videos.removeVideo(video.id)
+              .then(() => this.searchVideos());
+          }
+        }
+      ]
+    }).then((alert) => alert.present());
+  }
 } //end class
 
 

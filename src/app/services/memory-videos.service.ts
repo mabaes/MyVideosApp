@@ -30,7 +30,7 @@ country: 'ES'
       {
         id:'ewrwewe',
         type:'local',
-        url:'http://loquesea.com',
+        url:'/assets/videos/Mountains.mp4',
         title:'Titulo de pruebaa',
         description:'descripción del vudeo que vamos a ver',
         
@@ -43,7 +43,7 @@ country: 'ES'
       {
         id:'ewrwewe',
         type:'local',
-        url:'http://loquesea.com',
+        url:'/assets/videos/Snowy.mp4',
         title:'video dos',
         description:'que es lo que vamos a ver',
         

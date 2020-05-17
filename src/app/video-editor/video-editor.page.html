@@ -26,22 +26,24 @@
   </ion-list>
   <ion-card>
     <ion-fab vertical="top" horizontal="end">
-      <ion-fab-button>
+      <ion-fab-button >
         <ion-icon name="create"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="bottom">
-        <ion-fab-button>
+        <ion-fab-button (click)="selectImage()">
           <ion-icon name="images"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button>
+        <ion-fab-button (click)="enterImage()">
           <ion-icon name="link"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button>
+        <ion-fab-button (click)="cameraImage()">
           <ion-icon name="camera"></ion-icon>
         </ion-fab-button>
       </ion-fab-list>
     </ion-fab>
-    <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'">
+    <div style="min-height: 100px;">
+      <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'" >
+    </div>    
     <ion-card-content>
       <ion-text>
         <h2>URL: {{ video.url }}</h2>
@@ -50,6 +52,7 @@
         <p *ngIf="video.duration">Duration: {{ video.duration }}</p>
         <p *ngIf="video.width">Dimensions:
           {{ video.width }}x{{ video.height }}</p>
+       <!-- <p *ngIf="video.thumbnail">Img path: {{ video.thumbnail.url }}</p>-->
       </ion-text>
     </ion-card-content>
   </ion-card>
