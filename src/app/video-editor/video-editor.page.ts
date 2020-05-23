@@ -19,6 +19,8 @@ export class VideoEditorPage implements OnInit {
   @Input()
   private video: Video;
 
+  private win: any = window;
+
   private options: CameraOptions = {
     quality: 100,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -78,7 +80,35 @@ export class VideoEditorPage implements OnInit {
  
   selectImage(){
     console.log('[VideoEditorPage] select in folder');
-  }
+    ////////////////////////////////////////////////////////
+    const options: CameraOptions = {
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      mediaType: this.camera.MediaType.PICTURE      
+    };
+    this.camera.getPicture(options)
+      .then((url) => {
+        let url_tmp = 'data:image/jpeg;base64,' + url;//url.replace('content://','file:///');
+        url = url_tmp;
+        //url = this.win.Ionic.WebView.convertFileSrc('file://' + url);
+        console.log(`url select image galeria ${url}`);
+        this.video.thumbnail = {
+          url: url,
+          width: 100,
+          height: 100
+        }
+        //this.addVideo('file://' + url);
+      })
+      .catch((err) => {
+        // Handle error
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'ERROR selecting image galeria: ' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+    ///////////////////////////////////////////////////////
+  } //end select
 
   cameraImage() {
     console.log('[VideoEditor] cameraImage()');

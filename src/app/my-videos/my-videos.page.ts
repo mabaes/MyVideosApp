@@ -15,6 +15,7 @@ import { VideoPlayerPage } from '../video-player/video-player.page';
 export class MyVideosPage implements OnInit {
   private query = '';
   public myVideos: Video[] = [];
+  private win: any = window;
 
   constructor(private modalCtrl: ModalController, private camera: Camera,
     private alertCtrl: AlertController, private videos: VideosService,
@@ -72,7 +73,9 @@ export class MyVideosPage implements OnInit {
     };
     this.camera.getPicture(options)
       .then((url) => {
-        this.addVideo('file://' + url);
+        console.log(`url select video ${url}`);
+        //this.addVideo('file://' + url);
+        this.addVideo(this.win.Ionic.WebView.convertFileSrc('file://' + url));
       })
       .catch((err) => {
         // Handle error
@@ -88,6 +91,7 @@ export class MyVideosPage implements OnInit {
     console.log(`[MyVideosPage] addVideo(${url})`);
     this.readVideoInfo(url)
       .then((video) => {
+        console.log(`XXreadvideoinfo ${video}`)
         this.modalCtrl.create({
           component: VideoEditorPage,
           componentProps: { mode: 'add', video: video }
@@ -114,6 +118,8 @@ export class MyVideosPage implements OnInit {
 
   readVideoInfo(url: string, secs?: number): Promise<Video> {
     console.log(`readVideoInfo(${url},${secs})`);
+    //let url_tmp = url.replace('file:///','http://localhost:8100/');
+    //url = url_tmp;
     return new Promise((resolve, reject) => {
       let video: Video = {
         type: 'local',
@@ -138,12 +144,13 @@ export class MyVideosPage implements OnInit {
           canvas.height = videoNode.videoHeight;
           canvas.width = videoNode.videoWidth;
           var ctx = canvas.getContext('2d');
-          ctx.drawImage(videoNode, 0, 0, canvas.width, canvas.height);
+          ctx.drawImage(videoNode, 0, 0, canvas.width, canvas.height);          
           video.thumbnail = {
             url: canvas.toDataURL(),
             height: canvas.height,
             width: canvas.width
           };
+          
         } catch (err) {
           console.log('videoNode.onseeked_error=' + JSON.stringify(err));
         } finally {
@@ -157,7 +164,8 @@ export class MyVideosPage implements OnInit {
         };
         reject(error);
       };
-      videoNode.src = url;
+      console.log(`url cambiada: ${url}`);
+      videoNode.src = url;      
     });
   }//end read
 

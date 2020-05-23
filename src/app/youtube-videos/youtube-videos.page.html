@@ -1,9 +1,44 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>YoutubeVideos</ion-title>
+    <ion-title>Youtbue Videos</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (keyup.enter)="searchVideos($event)">
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
+  
+  
+  <ion-list>
+    <ion-item *ngFor="let video of myVideos">
+      <ion-thumbnail slot="start" (click)="playVideo(video)">
+        <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{ video.title }}</h3>
+        <p *ngIf="video.description">{{ video.description }}</p>
+      </ion-label>
+      <ion-button slot="end" fill="clear" (click)="showMenu(video)">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+      
+    </ion-item>
+    
+
+  </ion-list>
+
+
+  <!-- ---->
+  <div *ngIf="myVideos && myVideos.length>0; else Nolista">
+    <p>no estoy vacio</p>
+    </div>
+    <ng-template #Nolista>
+       <div class="titulo">
+            Pulsa sobre el icono + para añadir tus ciudades favoritas
+       </div>
+    </ng-template>
+  <!-- -->
+
 
 </ion-content>
