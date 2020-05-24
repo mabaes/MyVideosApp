@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Video Properties</ion-title>
+    <ion-title>Playlist Properties</ion-title>
     <ion-buttons slot="end">
       <ion-button *ngIf="mode !== 'view'" (click)="save()">Save</ion-button>
       <ion-button (click)="close()">
@@ -13,16 +13,12 @@
   <ion-list>
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.title"></ion-input>
+      <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="playlist.title"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Description</ion-label>
-      <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.description"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Tags</ion-label>
-      <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="video.tags"></ion-input>
-    </ion-item>
+      <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="playlist.description"></ion-input>
+    </ion-item>   
   </ion-list>
   <ion-card>
     <ion-fab vertical="top" horizontal="end">
@@ -42,17 +38,11 @@
       </ion-fab-list>
     </ion-fab>
     <div style="min-height: 180px;">
-      <img [src]="video.thumbnail? video.thumbnail.url: '/assets/video.png'" >
+      <img [src]="playlist.thumbnail? playlist.thumbnail.url: '/assets/playlists.png'" >
     </div>    
     <ion-card-content>
       <ion-text>
-        <h2>URL: {{ video.url }}</h2>
-        <p *ngIf="video.author">Author: {{ video.author }}</p>
-        <p *ngIf="video.date">Date: {{ video.date }}</p>
-        <p *ngIf="video.duration">Duration: {{ video.duration }}</p>
-        <p *ngIf="video.width">Dimensions:
-          {{ video.width }}x{{ video.height }}</p>
-       <!-- <p *ngIf="video.thumbnail">Img path: {{ video.thumbnail.url }}</p>-->
+        <p *ngIf="playlist.date">Date: {{playlist.date | date:'dd-MM-yyyy  HH:mm:ss'}}</p>
       </ion-text>
     </ion-card-content>
   </ion-card>

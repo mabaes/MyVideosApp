@@ -15,6 +15,7 @@ import { MemoryVideosService } from './services/memory-videos.service';
 import { Camera } from '@ionic-native/camera/ngx';
 import { VideoEditorPageModule } from './video-editor/video-editor.module';
 import { VideoPlayerPageModule } from './video-player/video-player.module';
+import { PlaylistEditorPageModule } from './playlist-editor/playlist-editor.module';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -24,7 +25,8 @@ import {YoutubeVideosService} from './services/youtube-videos.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, VideoEditorPageModule, VideoPlayerPageModule,HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, VideoEditorPageModule, 
+    VideoPlayerPageModule,HttpClientModule, PlaylistEditorPageModule],
   providers: [
     StatusBar,
     SplashScreen,

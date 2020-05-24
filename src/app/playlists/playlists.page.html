@@ -5,5 +5,41 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let playlist of myPlaylists">
+    <ion-item>
+      
+      <!-- -->
+      <ion-button slot="end" fill="clear" (click)="showMenu(playlist)">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+      <!-- -->
+    </ion-item>
+    <ion-row>
+      <ion-col col-12  class="ion-text-center">
+        <!--<img src="/assets/playlists.png" height="120">-->
+        <img [src]="playlist.thumbnail? playlist.thumbnail.url: '/assets/playlists.png'" height="playlist.thumbnail? playlist.thumbnail.height : '110' ">
+      </ion-col>
+    </ion-row>
+    
+    <ion-card-header>
+      <ion-card-title>{{ playlist.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ playlist.description }}
+    </ion-card-content>
+
+    <ion-footer>
+      <ion-row>
+        <ion-col col-8 center text-center>
+            <ion-icon name="videocam"></ion-icon>
+            <div>{{ playlist.count }} Videos</div>
+          </ion-col>
+        <ion-col col-8  center text-center>
+            <ion-icon name="play"></ion-icon>
+            <div>Play</div>
+          </ion-col>
+      </ion-row>
+    </ion-footer>
+  </ion-card>
 
 </ion-content>
