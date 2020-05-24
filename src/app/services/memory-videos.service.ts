@@ -28,7 +28,7 @@ country: 'ES'
     
     this.videos.push(
       {
-        id:'ewrwewe',
+        id:'v1',
         type:'local',
         url:'/assets/videos/Mountains.mp4',
         title:'Titulo de pruebaa',
@@ -41,7 +41,7 @@ country: 'ES'
        
       },
       {
-        id:'ewrwewe',
+        id:'v2',
         type:'local',
         url:'/assets/videos/Snowy.mp4',
         title:'video dos',
@@ -50,8 +50,23 @@ country: 'ES'
         tags:'video, gracioso, aniversario',
         duration:'30seg',
         date:'25/febrero/2020',
-        width:450,
-       
+        width:450,       
+      },
+      {
+        id:'v3',
+        type:'local',
+        url:'/assets/videos/Mountains.mp4',
+        title:'video mountains',
+        description:'Mountains ver',
+        tags:'video, gracioso, aniversario',
+        duration:'30seg',
+        date:'25/febrero/2020',
+        width:450,       
+        thumbnail: {
+          url:'assets/videos/Mountains.jpg',
+          width:200,
+          height:150
+        }
       }
     )
   }

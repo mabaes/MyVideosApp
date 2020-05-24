@@ -30,7 +30,10 @@ export class PlaylistEditorPage implements OnInit {
       private playlists: MemoryPlaylistsService, private camera: Camera ) { }
   
     ngOnInit() {
-      this.playlist = this.clone(this.playlist);
+      console.log('Modo:'+ this.mode);
+      if (this.mode!='add') {
+        this.playlist = this.clone(this.playlist);
+      }
     }
   
     close() {

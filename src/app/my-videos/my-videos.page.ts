@@ -6,6 +6,7 @@ import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { VideoPlayerPage } from '../video-player/video-player.page';
+import {PlaylistsSelectorPage} from '../playlists-selector/playlists-selector.page'
 
 @Component({
   selector: 'app-my-videos',
@@ -173,6 +174,14 @@ export class MyVideosPage implements OnInit {
     this.actionSheetCtrl.create({
       buttons: [
         {
+          text: 'Add to playlist',
+          icon: 'star',
+          handler: () => {
+            console.log('Add play list');
+            this.addPlaylist(video);
+          }
+        },
+        {
           text: 'Play',
           icon: 'play',
           handler: () => {
@@ -201,6 +210,25 @@ export class MyVideosPage implements OnInit {
       ]
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
+
+  addPlaylist(video:Video){
+    console.log(`[MyVideosPage] addPlaylist(${video.id})`);
+    this.modalCtrl.create({
+      component: PlaylistsSelectorPage,
+      componentProps: { idVideo: video.id }
+    })
+    .then((modal) => {
+      modal.onDidDismiss()
+        .then((evt: OverlayEventDetail) => {
+          
+          /*if (evt && evt.data) {
+            this.videos.updateVideo(evt.data)
+              .then(() => this.searchVideos());
+          } */
+        });
+      modal.present();
+    });
+  }
 
   editVideo(video: Video) {
     console.log(`[MyVideosPage] editVideo(${video.id})`);

@@ -25,7 +25,7 @@ export class YoutubeVideosPage implements OnInit {
       private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit() {
-    console.log('ngOnInit YoutubeVideosPage buscamos satriani');
+    console.log('ngOnInit YoutubeVideosPage pulsa para buscar');
     //this.searchVideos();
   }
   searchVideos(evt?) {

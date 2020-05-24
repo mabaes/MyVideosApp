@@ -56,7 +56,7 @@ export class PlaylistsPage implements OnInit {
           icon: 'play',
           handler: () => {
             console.log('Play playlist');
-            this.editPlaylist(playlist);
+            //this.editPlaylist(playlist);
           }
         },
         {
@@ -121,5 +121,129 @@ export class PlaylistsPage implements OnInit {
         modal.present();
       });
   }//edit playlist
+
+  addPlaylistX() {
+    console.log(`[PlaylistPage] add new playlist`);
+    this.modalCtrl.create({
+      component: PlaylistEditorPage,
+      componentProps: { mode: 'add',  }
+    })
+      .then((modal) => {
+        modal.onDidDismiss()
+          .then((evt: OverlayEventDetail) => {
+            if (evt && evt.data) {
+              this.playlist.updatePlaylist(evt.data)
+                .then(() => this.showPlaylist());
+            }
+          });
+        modal.present();
+      });
+  }
+
+  addPlaylist(){
+    console.log(`[PlaylistPage] add new playlist`);
+    this.createPlaylistEmpty()
+      .then((playlist) => {
+        console.log(`created temp play list ${playlist}`)
+        this.modalCtrl.create({
+          component: PlaylistEditorPage,
+          componentProps: { mode: 'add', playlist: playlist }
+        }).then((modal) => {
+          modal.onDidDismiss()
+            .then((evt: OverlayEventDetail) => {
+              if (evt && evt.data) {
+                this.playlist.addPlaylist(evt.data)                
+                  .then(() => this.showPlaylist());
+              }
+            });
+          modal.present();
+        });
+      })
+      .catch((err) => {
+        // Handle error
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'ERROR creating playlist : ' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+  }
+  /*
+   addVideo(url: string) {
+    console.log(`[MyVideosPage] addVideo(${url})`);
+    this.readVideoInfo(url)
+      .then((video) => {
+        console.log(`XXreadvideoinfo ${video}`)
+        this.modalCtrl.create({
+          component: VideoEditorPage,
+          componentProps: { mode: 'add', video: video }
+        }).then((modal) => {
+          modal.onDidDismiss()
+            .then((evt: OverlayEventDetail) => {
+              if (evt && evt.data) {
+                this.videos.addVideo(evt.data)
+                  .then(() => this.searchVideos());
+              }
+            });
+          modal.present();
+        });
+      })
+      .catch((err) => {
+        // Handle error
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'ERROR reading video info: ' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+  } //end add video
+  */
+
+  createPlaylistEmpty(): Promise<Playlist> {
+    console.log('New play list empty');
+    return new Promise((resolve, reject) => {
+      let _playlist: Playlist = {
+        id:'',
+        title:'',
+        description:'',
+        count:0
+      } 
+      resolve(_playlist);
+    });
+
+  }
+  
+
+
+  /**
+    addVideo(url: string) {
+    console.log(`[MyVideosPage] addVideo(${url})`);
+    this.readVideoInfo(url)
+      .then((video) => {
+        console.log(`XXreadvideoinfo ${video}`)
+        this.modalCtrl.create({
+          component: VideoEditorPage,
+          componentProps: { mode: 'add', video: video }
+        }).then((modal) => {
+          modal.onDidDismiss()
+            .then((evt: OverlayEventDetail) => {
+              if (evt && evt.data) {
+                this.videos.addVideo(evt.data)
+                  .then(() => this.searchVideos());
+              }
+            });
+          modal.present();
+        });
+      })
+      .catch((err) => {
+        // Handle error
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'ERROR reading video info: ' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+  } //end add video 
+   */
 
 }

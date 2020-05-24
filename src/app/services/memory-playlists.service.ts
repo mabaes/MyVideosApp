@@ -37,8 +37,9 @@ export class MemoryPlaylistsService extends PlaylistsService {
           width: 100,
           height: 400
         },
-        date: 1000,
-        count: 6
+        date: '12/12/2020',
+        count: 6,
+        idVideos: ['v1','v3']
       },
       {
         id:'pl-2',
@@ -49,9 +50,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
           width: 100,
           height: 100
         },
-        date: 13000,
+        date: '15/2/2020',
         count: 4
-
       }
 
     );
@@ -79,6 +79,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
     });
  }
 
+ /* OK */
  addPlaylist(playlist: Playlist): Promise<Playlist> {
   console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlist) +')');  
   playlist.id = String(this.nextId++);
@@ -89,6 +90,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
   });
  }
 
+  /* OK */
  removePlaylist(playlistId: string): Promise<void> {
   console.log(`[MemoryPlayListsService] removeVideo(${playlistId})`);
   var index = this.Playlist.findIndex((playlist) => playlist.id === playlistId);

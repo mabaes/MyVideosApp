@@ -29,6 +29,10 @@ const routes: Routes = [
   {
     path: 'playlist-editor',
     loadChildren: () => import('./playlist-editor/playlist-editor.module').then( m => m.PlaylistEditorPageModule)
+  },
+  {
+    path: 'playlists-selector',
+    loadChildren: () => import('./playlists-selector/playlists-selector.module').then( m => m.PlaylistsSelectorPageModule)
   }
 ];
 @NgModule({
