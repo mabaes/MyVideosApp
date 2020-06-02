@@ -68,7 +68,7 @@ export class PlaylistVideosPage implements OnInit {
           icon: 'trash',
           handler: () => {
             console.log('Delete video!!');
-            //this.deleteVideo(video);
+            this.deleteVideo(this.playlist, video);
           }
 
         }, // delete
@@ -86,16 +86,41 @@ export class PlaylistVideosPage implements OnInit {
     })
       .then((modal) => {
         modal.onDidDismiss()
-          .then((evt: OverlayEventDetail) => {
-            /*
-            if (evt && evt.data) {
-              this.videos.updateVideo(evt.data)
-                .then(() => this.searchVideos());
-            }
-            */
+          .then((evt: OverlayEventDetail) => {            
           });
         modal.present();
       });
   }//edit video
+
+  deleteVideo(playlist: Playlist, video: Video) {
+    console.log(`[PlaylistVideosPage] deleteVideo(${video.id}, Playlist: ${playlist})`);
+    this.alertCtrl.create({
+      header: 'Remove video',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel', role: 'cancel', handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Accept', handler: () => {
+            this.playlists.removeVideo(playlist.id, video.id)
+              .then(() =>
+                this.playlists.listVideos(playlist.id)
+                  .then((_videos) => {
+                    console.log('[PlaylistVideosPage] listvideos');
+                    console.log(_videos);
+                    this.myVideos = _videos;
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+              );
+          }
+        }
+      ]
+    }).then((alert) => alert.present());
+  }
 
 }

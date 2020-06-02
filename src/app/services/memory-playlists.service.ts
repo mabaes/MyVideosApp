@@ -148,10 +148,36 @@ export class MemoryPlaylistsService extends PlaylistsService {
  removeVideo(playlistId: string, videoId: string): Promise<void>{
   console.log('[MemoryPlayListsService] removeVideo(' + JSON.stringify(playlistId) +
   ')');
-  return new Promise((resolve, reject) => resolve());
+  ///////////////
+  var index = this.Playlist.findIndex((element) => element.id === playlistId);
+  if (index !== -1) {
+    let _playlist_item = this.Playlist[index];
+    console.log(_playlist_item.idVideos);
+    var index2 = _playlist_item.idVideos.findIndex((element) => element === videoId);
+    console.log(index2);
+    if (index2 !== -1 ) {
+      //this.videos.splice(index, 1);
+      _playlist_item.idVideos.splice (index2,1);
+      _playlist_item.count =_playlist_item.count -1;
+      if (_playlist_item.count<0) {
+        _playlist_item.count =0;
+      }
+      this.Playlist[index].count = _playlist_item.count;
+      this.Playlist[index].idVideos = _playlist_item.idVideos;
+      return new Promise((resolve, reject) => resolve());
+    }
+    else {
+      return new Promise((resolve, reject) => reject(new Error(`Video with id ${videoId} can't found.`)));
+    }
+    
+  } else {
+    return new Promise((resolve, reject) => reject(new Error(`PlayLists with id ${playlistId} not found`)));
+  }
+  ///////////////
  }
+ 
 
- //REVISAR:
+ /** OK **/
  listVideos(playlistId: string): Promise<Video[]> {
   console.log(`[MemoryPlayListVideosService] listVideos})`);
   let _videos: Video[] = [];
