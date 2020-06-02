@@ -215,7 +215,8 @@ export class MyVideosPage implements OnInit {
     console.log(`[MyVideosPage] addPlaylist(${video.id})`);
     this.modalCtrl.create({
       component: PlaylistsSelectorPage,
-      componentProps: { idVideo: video.id }
+      //componentProps: { idVideo: video.id }
+      componentProps: { video: video }
     })
     .then((modal) => {
       modal.onDidDismiss()

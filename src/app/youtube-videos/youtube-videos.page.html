@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Youtbue Videos</ion-title>
+    <ion-title>Youtube Videos</ion-title>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="query" (keyup.enter)="searchVideos($event)">
@@ -31,11 +31,10 @@
 
   <!-- ---->
   <div *ngIf="myVideos && myVideos.length>0; else Nolista">
-    <p>no estoy vacio</p>
-    </div>
+  </div>
     <ng-template #Nolista>
        <div class="titulo">
-            Pulsa sobre el icono + para añadir tus ciudades favoritas
+            Busca tus vídeos favoritos
        </div>
     </ng-template>
   <!-- -->

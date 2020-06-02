@@ -4,6 +4,7 @@ import {Playlist} from '../models/playlist';
 import { PlaylistsService } from './playlists.service';
 import { PlaylistsPage } from '../playlists/playlists.page';
 import {MemoryVideosService} from './memory-videos.service';
+import { VideosService } from './videos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,11 @@ export class MemoryPlaylistsService extends PlaylistsService {
   private videos: Video[] = [];
   private nextId = 0;
   private PlaylistVideos = [];
-  constructor() { 
+  constructor(private Videos: MemoryVideosService) { 
 
   ////
   super(); 
+  
    this.PlaylistVideos.push (
      {
        idPlayList : 'pl-1',
@@ -38,7 +40,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
           height: 400
         },
         date: '12/12/2020',
-        count: 6,
+        count: 2,
         idVideos: ['v1','v3']
       },
       {
@@ -51,7 +53,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
           height: 100
         },
         date: '15/2/2020',
-        count: 4
+        count: 1,
+        idVideos: ['v2']
       }
 
     );
@@ -116,12 +119,29 @@ export class MemoryPlaylistsService extends PlaylistsService {
     }
  }
 
- //REVISAR : añade el vídeo especificado a la lista de reproducción especificada
- addVideo(playlistId: string, video: Video): Promise<void> {
-  console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlistId) +
-  ')');
-  return new Promise((resolve, reject) => resolve());
  
+/** OK **/
+ addVideo(playlistId: string, video: Video): Promise<void> {
+  console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlistId) +  ')');
+  //ver si está en la platlist el idvideo. Si está no lo añadimos
+  var index = this.Playlist.findIndex((playlist) => playlist.id === playlistId);
+  if (index !== -1) {
+    let _playlist_item = this.Playlist[index];
+    var index2 = _playlist_item.idVideos.findIndex((element) => element === video.id);
+    if (index2 == -1 ) {
+      _playlist_item.idVideos.push (video.id);
+      _playlist_item.count =_playlist_item.count +1; 
+      return new Promise((resolve, reject) => resolve());
+    }
+    else {
+      return new Promise((resolve, reject) => reject(new Error(`Video with id ${video.id} was already added.`)));
+    }
+    //console.log(`[MemoryPlayListsService] addvideo in playlist ${_playlist_item.idVideos}`);
+ 
+  } else {
+    return new Promise((resolve, reject) => reject(new Error(`PlayLists with id ${playlistId} not found`)));
+  }
+
  }
 
  //REVISAR :
@@ -134,8 +154,25 @@ export class MemoryPlaylistsService extends PlaylistsService {
  //REVISAR:
  listVideos(playlistId: string): Promise<Video[]> {
   console.log(`[MemoryPlayListVideosService] listVideos})`);
+  let _videos: Video[] = [];
+  var index = this.Playlist.findIndex((playlist) => playlist.id === playlistId);
+  if (index !== -1) {
+    let _playlist_videos = this.Playlist[index].idVideos;
+    for(let video of _playlist_videos){
+      console.log(`video to add: ${video}`);
+      this.Videos.findVideoById(video)
+      .then((video) => {
+        _videos.push(video);
+      })
+      .catch((err) => {
+        console.log(`Error listVideos can't find. ${err}`);
+      })
+      ///////////////////////////
+    }
+  }
   return new Promise((resolve, reject) => {
-     resolve(this.videos);
+     //resolve(this.videos);
+     resolve(_videos);
   });
  }
 

@@ -3,6 +3,7 @@ import { Playlist } from '../models/playlist';
 import { MemoryPlaylistsService } from '../services/memory-playlists.service';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 import { PlaylistEditorPage } from '../playlist-editor/playlist-editor.page'
+import { PlaylistVideosPage } from '../playlist-videos/playlist-videos.page'
 import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
@@ -48,7 +49,7 @@ export class PlaylistsPage implements OnInit {
           icon: 'folder',
           handler: () => {
             console.log('Play playlist');
-            //this.playVideo(video);
+            this.openPlaylist(playlist);
           }
         },
         {
@@ -81,6 +82,23 @@ export class PlaylistsPage implements OnInit {
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
 
+  openPlaylist(playlist: Playlist) {
+    this.modalCtrl.create({
+      component: PlaylistVideosPage,   
+      componentProps: { playlist: playlist }  
+    })
+      .then((modal) => {
+        modal.onDidDismiss()
+          .then((evt: OverlayEventDetail) => {
+            if (evt && evt.data) {
+              this.playlist.updatePlaylist(evt.data)
+                .then(() => this.showPlaylist());
+            }
+          });
+        modal.present();
+      });
+
+  }
   deletePlaylist(playlist: Playlist) {
     console.log(`[PlaylistPage] deletePlaylist(${playlist.id})`);
     this.alertCtrl.create({

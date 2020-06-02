@@ -9,7 +9,6 @@ export interface Playlist {
     }
     date?: string;
     count?: number; // número de vídeos en la lista de reproducción
-    //[id: number]:  WeatherInfo[]
-    idVideos?: String[] ;
+    idVideos?: string[] ;
     
 }

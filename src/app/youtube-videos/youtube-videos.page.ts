@@ -7,6 +7,7 @@ import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
 
 import { VideoPlayerPage } from '../video-player/video-player.page';
+import {PlaylistsSelectorPage} from '../playlists-selector/playlists-selector.page'
 
 
 @Component({
@@ -53,7 +54,7 @@ export class YoutubeVideosPage implements OnInit {
   }
 
   playVideo(video: Video) {
-    console.log(`[YputubeVideosPage] playVideo(${video.id})`);
+    console.log(`[YoutubeVideosPage] playVideo(${video.id})`);
     this.modalCtrl.create({
       component: VideoPlayerPage,
       componentProps: { video: video }
@@ -86,7 +87,7 @@ export class YoutubeVideosPage implements OnInit {
           icon: 'star',
           handler: () => {
             console.log('Add Playlist');
-            this.playVideo(video);
+            this.addPlaylist(video);
           }
         },
         {
@@ -109,4 +110,25 @@ export class YoutubeVideosPage implements OnInit {
       ]
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
+
+
+  addPlaylist(video:Video){
+    console.log(`[YoutubeVideosPage] addPlaylist(${video.id})`);
+    this.modalCtrl.create({
+      component: PlaylistsSelectorPage,
+      //componentProps: { idVideo: video.id }
+      componentProps: { video: video }
+    })
+    .then((modal) => {
+      modal.onDidDismiss()
+        .then((evt: OverlayEventDetail) => {
+          
+          /*if (evt && evt.data) {
+            this.videos.updateVideo(evt.data)
+              .then(() => this.searchVideos());
+          } */
+        });
+      modal.present();
+    });
+  }
 }

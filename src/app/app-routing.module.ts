@@ -33,7 +33,12 @@ const routes: Routes = [
   {
     path: 'playlists-selector',
     loadChildren: () => import('./playlists-selector/playlists-selector.module').then( m => m.PlaylistsSelectorPageModule)
+  },
+  {
+    path: 'playlist-videos',
+    loadChildren: () => import('./playlist-videos/playlist-videos.module').then( m => m.PlaylistVideosPageModule)
   }
+  
 ];
 @NgModule({
   imports: [
