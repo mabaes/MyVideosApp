@@ -55,7 +55,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
         },
         date: '15/2/2020',
         count: 2,
-        idVideos: ['19JFykPcKcQ','Vizly-6w5tU']
+        idVideos: ['EuZBbjRHgLk','Vizly-6w5tU','v1']
       }
 
     );
@@ -64,17 +64,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
   }
   /////
 
-  /*
-  abstract findPlaylists(): Promise<Playlist[]>;
-  abstract addPlaylist(playlist: Playlist): Promise<Playlist>;
-  abstract removePlaylist(playlistId: string): Promise<void>;
-  abstract updatePlaylist(playlist: Playlist): Promise<Playlist>;
-  abstract addVideo(playlistId: string, video: Video): Promise<void>;
-  abstract removeVideo(playlistId: string, videoId: string): Promise<void>;
-  abstract listVideos(playlistId: string): Promise<Video[]>;
-  */
+ 
 
-/** OK */
  findPlaylists():Promise<Playlist[]> {
     console.log(`[MemoryPlayListVideosService] findPlaylsits})`);
     return new Promise((resolve, reject) => {
@@ -83,7 +74,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
     });
  }
 
- /* OK */
  addPlaylist(playlist: Playlist): Promise<Playlist> {
   console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlist) +')');  
   playlist.id = String(this.nextId++);
@@ -94,7 +84,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
   });
  }
 
-  /* OK */
  removePlaylist(playlistId: string): Promise<void> {
   console.log(`[MemoryPlayListsService] removeVideo(${playlistId})`);
   var index = this.Playlist.findIndex((playlist) => playlist.id === playlistId);
@@ -106,7 +95,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
   }
  }
 
-/** OK **/
  updatePlaylist(playlist: Playlist): Promise<Playlist> {
   console.log('[MemoryPlayListsService] updatePlaylists(' + JSON.stringify(playlist) +
   ')');
@@ -121,7 +109,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
  }
 
  
-/** OK **/
  addVideo(playlistId: string, video: Video): Promise<void> {
   console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlistId) +  ')');
   //ver si está en la platlist el idvideo. Si está no lo añadimos
@@ -146,7 +133,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
  }
 
  
- /** OK **/
  removeVideo(playlistId: string, videoId: string): Promise<void>{
   console.log('[MemoryPlayListsService] removeVideo(' + JSON.stringify(playlistId) +
   ')');
@@ -179,7 +165,6 @@ export class MemoryPlaylistsService extends PlaylistsService {
  }
  
 
- /** OK **/
  listVideos(playlistId: string): Promise<Video[]> {
   console.log(`[MemoryPlayListVideosService] listVideos})`);
   let _videos: Video[] = [];

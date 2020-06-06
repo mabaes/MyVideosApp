@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <div id="player"></div>
+  <div id="player" *ngIf="type === 'youtube'" [style.display]="toggleShowHide"></div>
   <!-- OK <iframe style="width: 100%; height: 100%;"
   id="ytplayer" type="text/html" [src]="videoSource" frameborder="0" width="100%"
   height="100%"></iframe> -->
@@ -15,7 +15,7 @@
   <!--<video [src]="{{activeVideoUrl}}" autoplay controls style="width: 100%; height: 100%;" #videoPlayer>
   </video> -->
    <video #videoPlayer controls autoplay controls  style="width: 100%; height: 100%;"  (ended)="nextVideo(idVideoSource,$event)" >
-    <source [src]="videoSource" type="video/mp4" />
+    <source [src]="videoSource" type="video/mp4" *ngIf="type === 'local'" />
     Browser not supported
 </video> 
  <!-- <video *ngIf="video.type !== 'youtube'" [src]="video.url" autoplay controls

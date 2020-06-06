@@ -28,7 +28,6 @@ export class PlaylistPlayerPage implements OnInit {
   public player: any;
   public reframed: Boolean = false;
   isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  public toggleShowHide: string = "block";
  
   /*** end api ***/
 
@@ -146,13 +145,17 @@ export class PlaylistPlayerPage implements OnInit {
 
   
   ngOnInit() {
-    //this.toggleShowHide ='none';
+    //this.videoSource = "/assets/videos/Star.mp4";
     this.playlists.listVideos(this.playlist.id)
     .then((_videos) => {
       console.log('[PlaylistPlayerPage] listvideos');
       console.log(_videos);
+      
       this.type = _videos[0].type;
       if(this.type =='youtube') {
+        //this.videoSource = this.domSanitizer.bypassSecurityTrustResourceUrl('http://www.youtube.com/embed/'+_videos[0].id+'?autoplay=0');
+        //this.video = 'nRiOw3qGYq4';
+        //this.init();
         this.video =  _videos[0].id;//'19JFykPcKcQ';//'nRiOw3qGYq4';
         this.init(this.video);
 
@@ -180,34 +183,33 @@ export class PlaylistPlayerPage implements OnInit {
     .then((_videos) => {
       console.log('[PlaylistPlayerPage] listvideos');
       console.log(_videos);
+      //let encontrado : boolean;
+      //let previo : boolean;
+      //encontrado = false;
+      //previo = false;
       let _max_videos : number;
       _max_videos = _videos.length;
       let index =  _videos.findIndex((element => element.id === idVideoSource));
       let nextindex = index+1;
       let _nextvideo = _videos[nextindex];
-      //this.videoSource = _nextvideo.url;
-      //this.idVideoSource = _nextvideo.id;
-      console.log('nextindex'+nextindex+' max_videos'+_max_videos);
-      if(nextindex<_max_videos) {
-          this.type = _nextvideo.type;
-        console.log(`next video: ${_nextvideo.id}`)
-        if(this.type =='youtube') {
-          this.video =  _nextvideo.id;
-          event.target.loadVideoById(this.video); 
-          event.target.playVideo();
-        }
-        else {
-          //this.toggleShowHide ='hidden';          
-          //this.player.style.display = "none";
-          //this.toggleShowHide ='none';
-          let tamanyo = event.target.setSize(10,10 );
-          console.log('entro en else');
-          this.videoSource = _nextvideo.url;
-          this.idVideoSource = _nextvideo.id;      
-          let video = this.mVideoPlayer.nativeElement;
-          video.src = _nextvideo.url;
-          video.play();      
-        }
+      this.videoSource = _nextvideo.url;
+      this.idVideoSource = _nextvideo.id;
+      //let x = document.querySelector('#videoPlayer video');//document.getElementById("reproVideo");
+      //console.log(x);
+      //x.play();
+      //event.toElement.play();
+      //this.videoplayer.nativeElement.play();
+      this.type = _nextvideo.type;
+      console.log(`next video: ${_nextvideo.id}`)
+      if(this.type =='youtube') {
+        this.video =  _nextvideo.id;//'19JFykPcKcQ';//'nRiOw3qGYq4';
+        event.target.loadVideoById(this.video); //nRiOw3qGYq4
+        event.target.playVideo();
+      }
+      else {
+        let video = this.mVideoPlayer.nativeElement;
+        video.src = _nextvideo.url;
+        video.play();      
       }
       
 
@@ -216,7 +218,21 @@ export class PlaylistPlayerPage implements OnInit {
       //https://forum.ionicframework.com/t/html5-video-playing-a-local-mp4-video-on-ios/104930
       
       console.log(_nextvideo);
-     
+      /*
+      for(let video of _videos){
+        //console.log(video.url);
+
+        if (video.id==idVideoSource) {
+          encontrado = true;
+
+        }
+        
+        this.videoSource = video.url;
+        this.idVideoSource = video.id;
+         
+      }
+      */
+      //this.myVideos = _videos;
     })
     .catch((err) => {
       console.log(err);
