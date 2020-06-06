@@ -38,6 +38,14 @@ export class PlaylistVideosPage implements OnInit {
     
   }
 
+  reorder(event) {
+    const itemToMove = this.myVideos.splice(event.from, 1)[0];
+    console.log(`Reorder ${itemToMove}`);
+    console.log(itemToMove);
+    this.myVideos.splice(event.to, 0, itemToMove);
+
+}
+
   close() {
     console.log('[PlaylistsVideosPage] close()');
     this.modalCtrl.dismiss();

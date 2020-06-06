@@ -4,6 +4,7 @@ import { MemoryPlaylistsService } from '../services/memory-playlists.service';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 import { PlaylistEditorPage } from '../playlist-editor/playlist-editor.page'
 import { PlaylistVideosPage } from '../playlist-videos/playlist-videos.page'
+import {PlaylistPlayerPage} from '../playlist-player/playlist-player.page'
 import { OverlayEventDetail } from '@ionic/core';
 
 @Component({
@@ -41,6 +42,7 @@ export class PlaylistsPage implements OnInit {
 
   }
 
+  
   showMenu(playlist) {
     this.actionSheetCtrl.create({
       buttons: [
@@ -57,7 +59,7 @@ export class PlaylistsPage implements OnInit {
           icon: 'play',
           handler: () => {
             console.log('Play playlist');
-            //this.editPlaylist(playlist);
+            this.playPlaylist(playlist);
           }
         },
         {
@@ -81,6 +83,14 @@ export class PlaylistsPage implements OnInit {
       ]
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
+
+
+playPlaylist (playlist: Playlist) {
+  this.modalCtrl.create({
+    component: PlaylistPlayerPage,
+    componentProps: { playlist: playlist }
+  }).then((modal) => modal.present());
+}
 
   openPlaylist(playlist: Playlist) {
     this.modalCtrl.create({

@@ -18,7 +18,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
 
   ////
   super(); 
-  
+  /*
    this.PlaylistVideos.push (
      {
        idPlayList : 'pl-1',
@@ -29,6 +29,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
       idVideos : ['2','3']
     }
    );
+   */
     this.Playlist.push (
       {
         id:'pl-1',
@@ -40,8 +41,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
           height: 400
         },
         date: '12/12/2020',
-        count: 2,
-        idVideos: ['v1','v3']
+        count: 3,
+        idVideos: ['v1','v3','v2']
       },
       {
         id:'pl-2',
@@ -53,8 +54,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
           height: 100
         },
         date: '15/2/2020',
-        count: 1,
-        idVideos: ['v2']
+        count: 2,
+        idVideos: ['19JFykPcKcQ','Vizly-6w5tU']
       }
 
     );
@@ -144,7 +145,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
 
  }
 
- //REVISAR :
+ 
+ /** OK **/
  removeVideo(playlistId: string, videoId: string): Promise<void>{
   console.log('[MemoryPlayListsService] removeVideo(' + JSON.stringify(playlistId) +
   ')');

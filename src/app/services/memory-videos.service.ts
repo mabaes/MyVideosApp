@@ -55,19 +55,69 @@ country: 'ES'
       {
         id:'v3',
         type:'local',
-        url:'/assets/videos/Mountains.mp4',
-        title:'video mountains',
-        description:'Mountains ver',
+        url:'/assets/videos/Robin.mp4',
+        title:'video bird',
+        description:'bird ver',
         tags:'video, gracioso, aniversario',
         duration:'30seg',
         date:'25/febrero/2020',
         width:450,       
         thumbnail: {
-          url:'assets/videos/Mountains.jpg',
+          url:'assets/videos/Robin.jpg',
+          width:200,
+          height:150
+        }
+      },
+      {
+        id:'v4',
+        type:'local',
+        url:'/assets/videos/Star.mp4',
+        title:'video star',
+        description:'star star',
+        tags:'video, gracioso, aniversario',
+        duration:'30seg',
+        date:'25/febrero/2020',
+        width:450,       
+        thumbnail: {
+          url:'assets/videos/Star.jpg',
+          width:200,
+          height:150
+        }
+      },
+      {
+        id:'19JFykPcKcQ',
+        type:'youtube',
+        url:'https://www.youtube.com/watch?v=19JFykPcKcQ',
+        title:'Buenos días (videos para compartir por WhatsApp)',
+        description:'descripción del video',
+        tags:'video, gracioso, aniversario',
+        duration:'30seg',
+        date:'25/febrero/2020',
+        width:450,       
+        thumbnail: {
+          url:'assets/videos/Robin.jpg',
+          width:200,
+          height:150
+        }
+      },
+      {
+        id:'Vizly-6w5tU',
+        type:'youtube',
+        url:'https://www.youtube.com/watch?v=Vizly-6w5tU',
+        title:'Osito panda estornuda y asusta a la madre',
+        description:'descripción del video',
+        tags:'video, gracioso, aniversario',
+        duration:'30seg',
+        date:'25/febrero/2020',
+        width:450,       
+        thumbnail: {
+          url:'assets/videos/Robin.jpg',
           width:200,
           height:150
         }
       }
+      
+
     )
   }
 

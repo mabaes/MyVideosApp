@@ -18,11 +18,11 @@
     <ion-item>
       <ion-label position="floating">Description</ion-label>
       <ion-input type="text" [readonly]="mode === 'view'" [(ngModel)]="playlist.description"></ion-input>
-    </ion-item>   
+    </ion-item>
   </ion-list>
   <ion-card>
     <ion-fab vertical="top" horizontal="end">
-      <ion-fab-button >
+      <ion-fab-button>
         <ion-icon name="create"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="bottom">
@@ -38,8 +38,8 @@
       </ion-fab-list>
     </ion-fab>
     <div style="min-height: 180px;">
-      <img [src]="playlist.thumbnail? playlist.thumbnail.url: '/assets/playlists.png'" >
-    </div>    
+      <img [src]="playlist.thumbnail? playlist.thumbnail.url: '/assets/playlists.png'">
+    </div>
     <ion-card-content>
       <ion-text>
         <p *ngIf="playlist.date">Date: {{playlist.date | date:'dd-MM-yyyy  HH:mm:ss'}}</p>
