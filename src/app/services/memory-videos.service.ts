@@ -31,36 +31,46 @@ country: 'ES'
         id:'v1',
         type:'local',
         url:'/assets/videos/Mountains.mp4',
-        title:'Titulo de pruebaa',
-        description:'descripción del vudeo que vamos a ver',
-        
-        tags:'video, gracioso, aniversario',
-        duration:'30seg',
-        date:'25/febrero/2020',
+        title:'Montañas',
+        description:'Descubir las montañas de una forma única',
+        tags:'relax, naturaleza, montañas',
+        duration:'13seg',
+        date:'12/04/2020',
         width:450,
+        thumbnail: {
+          url:'assets/videos/Mountains.jpg',
+          width:200,
+          height:150
+        }
        
       },
       {
         id:'v2',
         type:'local',
         url:'/assets/videos/Snowy.mp4',
-        title:'video dos',
-        description:'que es lo que vamos a ver',
+        title:'Nevando',
+        description:'La naturaleza nos brinda imágenes preciosas de la nieve',
+        tags:'relax, nevar, naturaliza, nieve',
+        duration:'27seg',
+        date:'12/12/2019',
+        width:450, 
+        thumbnail: {
+          url:'assets/videos/Snowy.jpg',
+          width:200,
+          height:150
+        }      
         
-        tags:'video, gracioso, aniversario',
-        duration:'30seg',
-        date:'25/febrero/2020',
-        width:450,       
+        
       },
       {
         id:'v3',
         type:'local',
         url:'/assets/videos/Robin.mp4',
-        title:'video bird',
-        description:'bird ver',
-        tags:'video, gracioso, aniversario',
-        duration:'30seg',
-        date:'25/febrero/2020',
+        title:'Pájaros cantores',
+        description:'Los pájaros cantores aportan sonidos al espacio natural',
+        tags:'pájaros, colores, naturaleza, sonidos',
+        duration:'20seg',
+        date:'15/05/2020',
         width:450,       
         thumbnail: {
           url:'assets/videos/Robin.jpg',
@@ -72,11 +82,11 @@ country: 'ES'
         id:'v4',
         type:'local',
         url:'/assets/videos/Star.mp4',
-        title:'video star',
-        description:'star star',
-        tags:'video, gracioso, aniversario',
+        title:'Las estrellas',
+        description:'Contemplar las estrellas en el cielo',
+        tags:'estrellas, universo, cielo, planeta, naturaleza',
         duration:'30seg',
-        date:'25/febrero/2020',
+        date:'15/03/2020',
         width:450,       
         thumbnail: {
           url:'assets/videos/Star.jpg',
@@ -89,13 +99,13 @@ country: 'ES'
         type:'youtube',
         url:'https://www.youtube.com/watch?v=EuZBbjRHgLk',
         title:'Perros Castigados - Video para Estado de WhatsApp',
-        description:'descripción del video',
-        tags:'video, gracioso, aniversario',
+        description:'Perros castigados después de sacar las zapatillas',
+        tags:'perros, gracioso, animales',
         duration:'30seg',
-        date:'25/febrero/2020',
+        date:'22/03/2020',
         width:450,       
         thumbnail: {
-          url:'assets/videos/Robin.jpg',
+          url:'assets/videos/perros.jpg',
           width:200,
           height:150
         }
@@ -105,17 +115,33 @@ country: 'ES'
         type:'youtube',
         url:'https://www.youtube.com/watch?v=Vizly-6w5tU',
         title:'Osito panda estornuda y asusta a la madre',
-        description:'descripción del video',
-        tags:'video, gracioso, aniversario',
-        duration:'30seg',
-        date:'25/febrero/2020',
+        description:'Menudo susto le dá este pequeños a su madre',
+        tags:'panda, gracioso, animales, susto',
+        duration:'12seg',
+        date:'22/01/2019',
         width:450,       
         thumbnail: {
-          url:'assets/videos/Robin.jpg',
+          url:'assets/videos/oso-panda.jpg',
           width:200,
           height:150
         }
-      }
+      },
+      {
+        id:'v5',
+        type:'local',
+        url:'/assets/videos/girl-happy.mp4',
+        title:'La felicidad',
+        description:'La primareva y la felicicdad',
+        tags:'campo,naturaleza, felicidad, flores',
+        duration:'120seg',
+        date:'15/03/2020',
+        width:450,       
+        thumbnail: {
+          url:'assets/videos/girl-happy.jpg',
+          width:200,
+          height:150
+        }
+      },
       
 
     )

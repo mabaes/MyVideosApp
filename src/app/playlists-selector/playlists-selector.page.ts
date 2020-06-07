@@ -27,7 +27,8 @@ export class PlaylistsSelectorPage implements OnInit {
 
   ngOnInit() {
     //console.log(`Playlist Selector idvideo: ${this.idVideo}`)
-    console.log(`Playlist Selector idvideo: ${this.video}`)
+    console.log(`Playlist Selector idvideo: ${this.video}`);
+    console.log(this.video);
     this.playlist.findPlaylists()
       .then((playlists) => {
         this.myPlaylists = playlists;
@@ -45,6 +46,7 @@ export class PlaylistsSelectorPage implements OnInit {
   addVideoToPlaylist(playlist: Playlist) {  
     console.log(`Add to playlist ${playlist.id}`);
     console.log(`Add video ${this.video.id}`);
+    console.log(this.video);
     this.playlist.addVideo(playlist.id, this.video)
     .then(() => {
       // Handle error

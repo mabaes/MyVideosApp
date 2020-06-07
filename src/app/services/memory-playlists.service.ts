@@ -33,10 +33,10 @@ export class MemoryPlaylistsService extends PlaylistsService {
     this.Playlist.push (
       {
         id:'pl-1',
-        title: 'canciones rock',
-        description: 'las mejores canciones que hay ahora mismos',
+        title: 'Videos Relax',
+        description: 'los mejores videos para relajarse',
         thumbnail : {
-          url: '/assets/portada-rock.jpg',
+          url: '/assets/videos/naturaleza.jpg',
           width: 100,
           height: 400
         },
@@ -47,15 +47,15 @@ export class MemoryPlaylistsService extends PlaylistsService {
       {
         id:'pl-2',
         title: 'videos graciosos',
-        description: 'las mejores videos graciososo',
+        description: 'las mejores videos gracisos',
         thumbnail : {
-          url: '',
+          url: '/assets/videos/portada-rock.jpg',
           width: 100,
           height: 100
         },
         date: '15/2/2020',
-        count: 2,
-        idVideos: ['v1','EuZBbjRHgLk','Vizly-6w5tU']
+        count: 3,
+        idVideos: ['v5','EuZBbjRHgLk','Vizly-6w5tU']
       }
 
     );
@@ -108,6 +108,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
     }
  }
 
+ 
  
  addVideo(playlistId: string, video: Video): Promise<void> {
   console.log('[MemoryPlayListsService] addVideo(' + JSON.stringify(playlistId) +  ')');

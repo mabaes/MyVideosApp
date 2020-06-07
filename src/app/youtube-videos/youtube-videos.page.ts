@@ -23,11 +23,12 @@ export class YoutubeVideosPage implements OnInit {
   constructor(private videos: YoutubeVideosService, 
       private changes: ChangeDetectorRef,
       private modalCtrl: ModalController,
-      private actionSheetCtrl: ActionSheetController) { }
+      private actionSheetCtrl: ActionSheetController, private listaVideos: VideosService) { }
 
   ngOnInit() {
     console.log('ngOnInit YoutubeVideosPage pulsa para buscar');
     //this.searchVideos();
+  
   }
   searchVideos(evt?) {
     console.log('[YoutubeVideosPage] searchVideos()');
@@ -114,6 +115,11 @@ export class YoutubeVideosPage implements OnInit {
 
   addPlaylist(video:Video){
     console.log(`[YoutubeVideosPage] addPlaylist(${video.id})`);
+    this.videos.addVideo(video);
+    // add video a  la lista de videos
+    this.listaVideos.addVideo(video)
+     .then(() => console.log(this.listaVideos));
+    
     this.modalCtrl.create({
       component: PlaylistsSelectorPage,
       //componentProps: { idVideo: video.id }
