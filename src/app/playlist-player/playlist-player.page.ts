@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef,ChangeDetectorRef } from '@angular/core';
 import { Playlist } from '../models/playlist';
 
 import { ModalController, AlertController, ActionSheetController } from '@ionic/angular';
@@ -17,6 +17,7 @@ export class PlaylistPlayerPage implements OnInit {
   private videoSource : any;
   private idVideoSource : string;
   private type :string;
+
   //private videoplayer: ElementRef;
   videoElement: HTMLVideoElement;
 
@@ -29,6 +30,9 @@ export class PlaylistPlayerPage implements OnInit {
   public reframed: Boolean = false;
   isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   public toggleShowHide: string = "block";
+  public localvideoStyle: string ; //"width:0%; height:0%";
+  public showVideo : boolean= false;
+
  
   /*** end api ***/
 
@@ -36,7 +40,7 @@ export class PlaylistPlayerPage implements OnInit {
   @ViewChild('videoPlayer', { static: false }) mVideoPlayer: any;
  
   constructor( private playlists: MemoryPlaylistsService, private modalCtrl: ModalController,
-    private domSanitizer: DomSanitizer) { }
+    private domSanitizer: DomSanitizer, private changes: ChangeDetectorRef) { }
 
     /*
     ngOnInit() {
@@ -47,6 +51,8 @@ export class PlaylistPlayerPage implements OnInit {
     /*** API *** **/
      /* 2. Initialize method for YT IFrame API */
   init(video:string) {
+    this.localvideoStyle = "display:none";
+    //this.showVideo = false;
     // Return if Player is already created
    
     if (window['YT']) {
@@ -59,7 +65,7 @@ export class PlaylistPlayerPage implements OnInit {
     tag.src = 'https://www.youtube.com/iframe_api';
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    console.log('init parameters');
+    console.log(`init parameters ${video}`);
     /* 3. startVideo() will create an <iframe> (and YouTube player) after the API code downloads. */
     window['onYouTubeIframeAPIReady'] = () => this.startVideo(video);
    
@@ -88,7 +94,8 @@ export class PlaylistPlayerPage implements OnInit {
         'onReady': this.onPlayerReady.bind(this),
       }
     });
-         
+    //console.log('player');
+    //console.log(this.player);
   }
 
   /* 4. It will be called when the Video Player is ready */
@@ -147,16 +154,25 @@ export class PlaylistPlayerPage implements OnInit {
   
   ngOnInit() {
     //this.toggleShowHide ='none';
+    //this.showVideo = true;
+    console.log(this.showVideo);
     this.playlists.listVideos(this.playlist.id)
+    
     .then((_videos) => {
       console.log('[PlaylistPlayerPage] listvideos');
       console.log(_videos);
       this.type = _videos[0].type;
       if(this.type =='youtube') {
+        this.showVideo = false;
+        this.changes.detectChanges();
         this.video =  _videos[0].id;//'19JFykPcKcQ';//'nRiOw3qGYq4';
         this.init(this.video);
 
       } else {
+        this.showVideo = true;
+        this.localvideoStyle ="display:block";
+        this.changes.detectChanges();
+        
         this.videoSource = _videos[0].url;
         this.idVideoSource = _videos[0].id;
       }
@@ -174,7 +190,8 @@ export class PlaylistPlayerPage implements OnInit {
 
   nextVideo(idVideoSource, event) {
     console.log('siguiente video');
-    console.log(this.idVideoSource);    
+    console.log(this.idVideoSource);   
+   
     /////////////////////
     this.playlists.listVideos(this.playlist.id)
     .then((_videos) => {
@@ -192,16 +209,31 @@ export class PlaylistPlayerPage implements OnInit {
           this.type = _nextvideo.type;
         console.log(`next video: ${_nextvideo.id}`)
         if(this.type =='youtube') {
+          this.showVideo = false;
+          //let tamanyo = event.target.setSize('100%','100%' );
           this.video =  _nextvideo.id;
-          event.target.loadVideoById(this.video); 
-          event.target.playVideo();
+          if (window['YT']) {
+            this.player.setSize('100%','100%' );
+            this.changes.detectChanges();            
+            //event.target.loadVideoById(this.video); 
+            //event.target.playVideo();
+            this.player.loadVideoById(this.video); 
+            this.player.playVideo();
+          }else {
+            this.init(this.video);
+          }
         }
         else {
           //this.toggleShowHide ='hidden';          
           //this.player.style.display = "none";
           //this.toggleShowHide ='none';
-          let tamanyo = event.target.setSize(10,10 );
+          this.showVideo = true; 
+          if (window['YT']!=undefined) {
+            let tamanyo = this.player.setSize(10,10 );//event.target.setSize(10,10 );
+          }  
+          this.localvideoStyle ="width:100%; height:100%";
           console.log('entro en else');
+          this.changes.detectChanges();
           this.videoSource = _nextvideo.url;
           this.idVideoSource = _nextvideo.id;      
           let video = this.mVideoPlayer.nativeElement;

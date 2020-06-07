@@ -55,7 +55,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
         },
         date: '15/2/2020',
         count: 2,
-        idVideos: ['EuZBbjRHgLk','Vizly-6w5tU','v1']
+        idVideos: ['v1','EuZBbjRHgLk','Vizly-6w5tU']
       }
 
     );

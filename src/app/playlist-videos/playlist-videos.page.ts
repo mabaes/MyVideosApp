@@ -4,7 +4,7 @@ import { Video } from '../models/video';
 import { ModalController, AlertController, ActionSheetController } from '@ionic/angular';
 import {MemoryPlaylistsService} from '../services/memory-playlists.service';
 
-
+import { VideoPlayerPage } from '../video-player/video-player.page';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
 
@@ -39,10 +39,40 @@ export class PlaylistVideosPage implements OnInit {
   }
 
   reorder(event) {
+    /*
     const itemToMove = this.myVideos.splice(event.from, 1)[0];
     console.log(`Reorder ${itemToMove}`);
     console.log(itemToMove);
     this.myVideos.splice(event.to, 0, itemToMove);
+    event.detail.complete();
+    this.changes.detectChanges();
+    */
+    console.log(event);
+    console.log(`Moving item from ${event.detail.from} to ${event.detail.to}`);
+    const itemMove = this.myVideos.splice(event.detail.from, 1)[0];
+    console.log(itemMove);
+    this.myVideos.splice(event.detail.to, 0, itemMove);
+    //this.myVideos = reorderArray(this.myVideos, event.detail.from, event.detail.to);
+    event.detail.complete();
+    console.log(this.myVideos);
+    console.log(this.playlist);
+    //this.playlist.idVideos = [];
+    this.playlist.idVideos.length =0;
+    
+    
+    for(let myvideo_item of this.myVideos){ 
+      this.playlist.idVideos.push(myvideo_item.id);
+    };
+    /*
+    this.myVideos.forEach(function(value, key) {
+      //cData.push({"key": value.key,"value": value.values[i].y});
+      console.log(`key: ${key}`);
+      this.playlist.idVideos[key]=value;
+      //this.playlist.idVideos.push(value);
+    })
+    */
+    console.log(this.playlist);
+    this.changes.detectChanges();
 
 }
 
@@ -60,7 +90,7 @@ export class PlaylistVideosPage implements OnInit {
           icon: 'play',
           handler: () => {
             console.log('Play video');
-            //this.playVideo(video);
+            this.playVideo(video);
           }
         },
         {
@@ -85,6 +115,15 @@ export class PlaylistVideosPage implements OnInit {
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
 
+  
+
+  playVideo(video: Video) {
+    console.log(`[MyVideosPage] playVideo(${video.id})`);
+    this.modalCtrl.create({
+      component: VideoPlayerPage,
+      componentProps: { video: video }
+    }).then((modal) => modal.present());
+  }
 
   editVideo(video: Video) {
     console.log(`[PlaylistVideosPage] editVideo(${video.id})`);
