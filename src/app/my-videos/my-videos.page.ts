@@ -65,7 +65,6 @@ export class MyVideosPage implements OnInit {
   }
 
   selectVideo() {
-    //https://stackoverflow.com/questions/55353840/cordova-how-to-access-device-storage
     console.log('[MyVideosPage] selectVideo()');
     const options: CameraOptions = {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,

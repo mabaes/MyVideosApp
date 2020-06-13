@@ -9,20 +9,7 @@ export class MemoryVideosService extends VideosService {
   private videos: Video[] = [];
   private nextId = 0;
 
-  ////////////////////////
-  /*
-  private locations: WeatherLocation[] = [];
-constructor() {
-this.locations.push({
-id: 100,
-lat: 38.71,
-lon: -0.47,
-name: 'Alcoy',
-country: 'ES'
-});
-*/
-  //////////////////
-
+  
   constructor() { 
     super(); 
     
@@ -169,7 +156,9 @@ country: 'ES'
   addVideo(video: Video): Promise<Video> {
     console.log('[MemoryVideosService] addVideo(' + JSON.stringify(video) +')');
     let _video = this.clone(video);
-    _video.id = String(this.nextId++);
+    if(_video.type!='youtube') {
+      _video.id = String(this.nextId++);
+    }
     this.videos.push(_video);
     return new Promise((resolve, reject) => resolve(this.clone(_video)));
   }

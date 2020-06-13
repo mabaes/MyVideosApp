@@ -39,20 +39,10 @@ export class PlaylistVideosPage implements OnInit {
   }
 
   reorder(event) {
-    /*
-    const itemToMove = this.myVideos.splice(event.from, 1)[0];
-    console.log(`Reorder ${itemToMove}`);
-    console.log(itemToMove);
-    this.myVideos.splice(event.to, 0, itemToMove);
-    event.detail.complete();
-    this.changes.detectChanges();
-    */
-    console.log(event);
     console.log(`Moving item from ${event.detail.from} to ${event.detail.to}`);
     const itemMove = this.myVideos.splice(event.detail.from, 1)[0];
     console.log(itemMove);
     this.myVideos.splice(event.detail.to, 0, itemMove);
-    //this.myVideos = reorderArray(this.myVideos, event.detail.from, event.detail.to);
     event.detail.complete();
     console.log(this.myVideos);
     console.log(this.playlist);
@@ -63,14 +53,6 @@ export class PlaylistVideosPage implements OnInit {
     for(let myvideo_item of this.myVideos){ 
       this.playlist.idVideos.push(myvideo_item.id);
     };
-    /*
-    this.myVideos.forEach(function(value, key) {
-      //cData.push({"key": value.key,"value": value.values[i].y});
-      console.log(`key: ${key}`);
-      this.playlist.idVideos[key]=value;
-      //this.playlist.idVideos.push(value);
-    })
-    */
     console.log(this.playlist);
     this.changes.detectChanges();
 

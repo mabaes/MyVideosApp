@@ -17,19 +17,8 @@ export class MemoryPlaylistsService extends PlaylistsService {
   constructor(private Videos: MemoryVideosService) { 
 
   ////
-  super(); 
-  /*
-   this.PlaylistVideos.push (
-     {
-       idPlayList : 'pl-1',
-       idVideos : ['2','4','3']
-     },
-     {
-      idPlayList : 'pl-2',
-      idVideos : ['2','3']
-    }
-   );
-   */
+  super();
+  
     this.Playlist.push (
       {
         id:'pl-1',
@@ -55,7 +44,7 @@ export class MemoryPlaylistsService extends PlaylistsService {
         },
         date: '15/2/2020',
         count: 3,
-        idVideos: ['v5','EuZBbjRHgLk','Vizly-6w5tU']
+        idVideos: ['v1','EuZBbjRHgLk','Vizly-6w5tU']
       }
 
     );

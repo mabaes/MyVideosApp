@@ -18,11 +18,9 @@ export class PlaylistPlayerPage implements OnInit {
   private idVideoSource : string;
   private type :string;
 
-  //private videoplayer: ElementRef;
   videoElement: HTMLVideoElement;
 
 
-  /*** api ***/
   /* 1. Some required variables which will be used by YT API*/
   public YT: any;
   public video: any;
@@ -30,11 +28,9 @@ export class PlaylistPlayerPage implements OnInit {
   public reframed: Boolean = false;
   isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   public toggleShowHide: string = "block";
-  public localvideoStyle: string ; //"width:0%; height:0%";
+  public localvideoStyle: string ; 
   public showVideo : boolean= false;
 
- 
-  /*** end api ***/
 
 
   @ViewChild('videoPlayer', { static: false }) mVideoPlayer: any;
@@ -42,17 +38,10 @@ export class PlaylistPlayerPage implements OnInit {
   constructor( private playlists: MemoryPlaylistsService, private modalCtrl: ModalController,
     private domSanitizer: DomSanitizer, private changes: ChangeDetectorRef) { }
 
-    /*
-    ngOnInit() {
-      this.video = '19JFykPcKcQ';//'nRiOw3qGYq4';
-      this.init();
-    }
-    */
-    /*** API *** **/
-     /* 2. Initialize method for YT IFrame API */
+  /* 2. Initialize method for YT IFrame API */
   init(video:string) {
     this.localvideoStyle = "display:none";
-    //this.showVideo = false;
+  
     // Return if Player is already created
    
     if (window['YT']) {
@@ -94,8 +83,7 @@ export class PlaylistPlayerPage implements OnInit {
         'onReady': this.onPlayerReady.bind(this),
       }
     });
-    //console.log('player');
-    //console.log(this.player);
+    
   }
 
   /* 4. It will be called when the Video Player is ready */
@@ -128,8 +116,6 @@ export class PlaylistPlayerPage implements OnInit {
       case window['YT'].PlayerState.ENDED:
         console.log('ended '+ this.video);
         this.nextVideo(this.video,event);
-        //event.target.loadVideoById('nRiOw3qGYq4');
-        //event.target.playVideo();
         break;
     };
   };
@@ -149,13 +135,9 @@ export class PlaylistPlayerPage implements OnInit {
         break;
     };
   };
-    /*** END API */
-
+  
   
   ngOnInit() {
-    //this.toggleShowHide ='none';
-    //this.showVideo = true;
-    console.log(this.showVideo);
     this.playlists.listVideos(this.playlist.id)
     
     .then((_videos) => {
@@ -165,7 +147,7 @@ export class PlaylistPlayerPage implements OnInit {
       if(this.type =='youtube') {
         this.showVideo = false;
         this.changes.detectChanges();
-        this.video =  _videos[0].id;//'19JFykPcKcQ';//'nRiOw3qGYq4';
+        this.video =  _videos[0].id;
         this.init(this.video);
 
       } else {
@@ -202,15 +184,12 @@ export class PlaylistPlayerPage implements OnInit {
       let index =  _videos.findIndex((element => element.id === idVideoSource));
       let nextindex = index+1;
       let _nextvideo = _videos[nextindex];
-      //this.videoSource = _nextvideo.url;
-      //this.idVideoSource = _nextvideo.id;
       console.log('nextindex'+nextindex+' max_videos'+_max_videos);
       if(nextindex<_max_videos) {
           this.type = _nextvideo.type;
         console.log(`next video: ${_nextvideo.id}`)
         if(this.type =='youtube') {
           this.showVideo = false;
-          //let tamanyo = event.target.setSize('100%','100%' );
           this.video =  _nextvideo.id;
           if (window['YT']) {
             this.player.setSize('100%','100%' );
@@ -224,9 +203,6 @@ export class PlaylistPlayerPage implements OnInit {
           }
         }
         else {
-          //this.toggleShowHide ='hidden';          
-          //this.player.style.display = "none";
-          //this.toggleShowHide ='none';
           this.showVideo = true; 
           if (window['YT']!=undefined) {
             let tamanyo = this.player.setSize(10,10 );//event.target.setSize(10,10 );
@@ -241,12 +217,6 @@ export class PlaylistPlayerPage implements OnInit {
           video.play();      
         }
       }
-      
-
-      //https://stackoverflow.com/questions/44622979/html5-video-play-not-playing-ionic-3-ios-and-android
-      //https://www.w3schools.com/tags/ref_eventattributes.asp
-      //https://forum.ionicframework.com/t/html5-video-playing-a-local-mp4-video-on-ios/104930
-      
       console.log(_nextvideo);
      
     })
