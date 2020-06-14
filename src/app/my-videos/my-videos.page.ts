@@ -7,6 +7,7 @@ import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
 import { VideoPlayerPage } from '../video-player/video-player.page';
 import {PlaylistsSelectorPage} from '../playlists-selector/playlists-selector.page'
+import { RESTVideosService } from '../services/restvideos.service';
 
 @Component({
   selector: 'app-my-videos',
@@ -18,8 +19,10 @@ export class MyVideosPage implements OnInit {
   public myVideos: Video[] = [];
   private win: any = window;
 
-  constructor(private modalCtrl: ModalController, private camera: Camera,
-    private alertCtrl: AlertController, private videos: VideosService,
+  constructor(
+    //rivate RESTvideos: RESTVideosService,
+    private modalCtrl: ModalController, private camera: Camera,
+    private alertCtrl: AlertController, private videos: RESTVideosService,
     private actionSheetCtrl: ActionSheetController, private changes: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -30,6 +33,16 @@ export class MyVideosPage implements OnInit {
   searchVideos(evt?) {
     console.log('[MyVideosPage] searchVideos()');
     let query = evt ? evt.target.value.trim() : this.query;
+    /*
+    this.RESTvideos.findVideos(query)
+    .then((videos) => {
+      this.myVideos = videos
+      console.log('[MyVideosPage] RESTsearchVideos() => ' +
+        JSON.stringify(this.myVideos));
+      this.changes.detectChanges();
+    });
+    */
+    
     this.videos.findVideos(query)
       .then((videos) => {
         this.myVideos = videos
@@ -37,6 +50,7 @@ export class MyVideosPage implements OnInit {
           JSON.stringify(this.myVideos));
         this.changes.detectChanges();
       });
+    
 
   }
 
@@ -173,7 +187,7 @@ export class MyVideosPage implements OnInit {
     this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Add to playlist',
+          text: 'Add to playlist' + video.id,
           icon: 'star',
           handler: () => {
             console.log('Add play list');

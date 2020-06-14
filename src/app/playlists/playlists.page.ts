@@ -6,6 +6,7 @@ import { PlaylistEditorPage } from '../playlist-editor/playlist-editor.page'
 import { PlaylistVideosPage } from '../playlist-videos/playlist-videos.page'
 import {PlaylistPlayerPage} from '../playlist-player/playlist-player.page'
 import { OverlayEventDetail } from '@ionic/core';
+import { RESTPlaylistsService } from '../services/restplaylists.service';
 
 @Component({
   selector: 'app-playlists',
@@ -18,11 +19,12 @@ export class PlaylistsPage implements OnInit {
     private changes: ChangeDetectorRef,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private RESTplaylist: RESTPlaylistsService,
   ) { }
 
   ngOnInit() {
-    this.playlist.findPlaylists()
+    this.RESTplaylist.findPlaylists()
       .then((playlists) => {
         this.myPlaylists = playlists;
         console.log('[PlaylistsPage] findplaylists() => ' +

@@ -19,10 +19,9 @@ import { PlaylistEditorPageModule } from './playlist-editor/playlist-editor.modu
 import {PlaylistsSelectorPageModule} from './playlists-selector/playlists-selector.module';
 import {PlaylistVideosPageModule} from './playlist-videos/playlist-videos.module';
 import {PlaylistPlayerPageModule} from './playlist-player/playlist-player.module'
-
 import { HttpClientModule } from '@angular/common/http';
-
 import {YoutubeVideosService} from './services/youtube-videos.service';
+import { UserPageModule } from './user/user.module';
 
 
 @NgModule({
@@ -30,7 +29,7 @@ import {YoutubeVideosService} from './services/youtube-videos.service';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, VideoEditorPageModule, 
     VideoPlayerPageModule,HttpClientModule, PlaylistEditorPageModule, PlaylistsSelectorPageModule,
-    PlaylistVideosPageModule, PlaylistPlayerPageModule],
+    PlaylistVideosPageModule, PlaylistPlayerPageModule, UserPageModule],
   providers: [
     StatusBar,
     SplashScreen,

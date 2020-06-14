@@ -1,5 +1,34 @@
-<ion-tabs>
+<ion-menu contentId="tabs">
+  <ion-content>
+    <ion-list style="padding-top: 0px;">
+      <ion-item color="primary">
+        <ion-avatar slot="start">
+          <ion-icon name="person"></ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <ion-text>
+            <h2>{{ user?.name }} {{ user?.surname }}</h2>
+            <p>{{ user?.email }}</p>
+          </ion-text>
+        </ion-label>
+      </ion-item>
+      <ion-menu-toggle>
+        <ion-item (click)="editUser()">
+          <ion-label>Edit account</ion-label>
+          <ion-icon name="create" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+      <ion-menu-toggle>
+        <ion-item (click)="doExit()">
+          <ion-label>Exit</ion-label>
+          <ion-icon name="exit" slot="start"></ion-icon>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+  </ion-content>
+</ion-menu>
 
+<ion-tabs id="tabs">
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="videos">
       <ion-icon name="videocam"></ion-icon>
