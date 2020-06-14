@@ -15,16 +15,16 @@ import { RESTPlaylistsService } from '../services/restplaylists.service';
 })
 export class PlaylistsPage implements OnInit {
   public myPlaylists: Playlist[] = [];
-  constructor(private playlist: MemoryPlaylistsService,
+  constructor(private playlist: RESTPlaylistsService,//MemoryPlaylistsService,
     private changes: ChangeDetectorRef,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private RESTplaylist: RESTPlaylistsService,
+    //private RESTplaylist: RESTPlaylistsService,
   ) { }
 
   ngOnInit() {
-    this.RESTplaylist.findPlaylists()
+    this.playlist.findPlaylists()
       .then((playlists) => {
         this.myPlaylists = playlists;
         console.log('[PlaylistsPage] findplaylists() => ' +
@@ -152,6 +152,7 @@ playPlaylist (playlist: Playlist) {
       });
   }//edit playlist
 
+  /*
   addPlaylistX() {
     console.log(`[PlaylistPage] add new playlist`);
     this.modalCtrl.create({
@@ -169,6 +170,7 @@ playPlaylist (playlist: Playlist) {
         modal.present();
       });
   }
+  */
 
   addPlaylist(){
     console.log(`[PlaylistPage] add new playlist`);
@@ -233,10 +235,15 @@ playPlaylist (playlist: Playlist) {
     console.log('New play list empty');
     return new Promise((resolve, reject) => {
       let _playlist: Playlist = {
-        id:'',
         title:'',
         description:'',
-        count:0
+        thumbnail : {
+          url:'',
+          width:0,
+          height:0
+        },
+        count:0,
+        idVideos :[]
       } 
       resolve(_playlist);
     });

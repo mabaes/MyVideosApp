@@ -2,7 +2,9 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Playlist } from '../models/playlist';
 import { Video } from '../models/video';
 import { ModalController, AlertController, ActionSheetController } from '@ionic/angular';
-import {MemoryPlaylistsService} from '../services/memory-playlists.service';
+//import {MemoryPlaylistsService} from '../services/memory-playlists.service';
+import {RESTPlaylistsService} from '../services/restplaylists.service';
+import {YoutubeVideosService} from '../services/youtube-videos.service';
 
 import { VideoPlayerPage } from '../video-player/video-player.page';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
@@ -19,8 +21,9 @@ export class PlaylistVideosPage implements OnInit {
   public myVideos: Video[] = [];
 
   constructor(private modalCtrl: ModalController, private alertCtrl:AlertController,
-    private playlists: MemoryPlaylistsService, private actionSheetCtrl: ActionSheetController,
-    private changes: ChangeDetectorRef) { }
+    private playlists: RESTPlaylistsService, private actionSheetCtrl: ActionSheetController,
+    private changes: ChangeDetectorRef,
+    private youtubeVideos: YoutubeVideosService) { }
 
   ngOnInit() {
     console.log (`[PlaylistVideosPage ${this.playlist.id}]`);
@@ -29,7 +32,29 @@ export class PlaylistVideosPage implements OnInit {
     .then((_videos) => {
       console.log('[PlaylistVideosPage] listvideos');
       console.log(_videos);
-      this.myVideos = _videos;
+      let _videosTmp: Video[] = [];
+      for (let video_item of _videos) {
+        console.log(video_item.type)
+        if(video_item.type==='youtube') {
+          this.youtubeVideos.findVideoById(video_item.id)
+          ////////////////////////////////////
+          .then((_video) => {
+            console.log('[Youtubevideo] result');
+            console.log(_video);
+            _videosTmp.push(_video);
+            //this.myVideos = _videos;
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          /////////////////////////////////////
+        } else {
+          _videosTmp.push(video_item)
+        }
+      } 
+      
+      //this.myVideos = _videos;
+      this.myVideos = _videosTmp;
     })
     .catch((err) => {
       console.log(err);

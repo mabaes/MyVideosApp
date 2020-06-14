@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Playlist } from '../models/playlist';
 import { ModalController, AlertController } from '@ionic/angular';
-import {MemoryPlaylistsService} from '../services/memory-playlists.service';
+//import {MemoryPlaylistsService} from '../services/memory-playlists.service';
+import {RESTPlaylistsService} from '../services/restplaylists.service';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -27,7 +28,7 @@ export class PlaylistEditorPage implements OnInit {
     };
 
     constructor(private modalCtrl: ModalController, private alertCtrl:AlertController,
-      private playlists: MemoryPlaylistsService, private camera: Camera ) { }
+      private playlists: RESTPlaylistsService, private camera: Camera ) { }
   
     ngOnInit() {
       console.log('Modo:'+ this.mode);
@@ -68,8 +69,10 @@ export class PlaylistEditorPage implements OnInit {
                 width:100,
                 height:100
               }
-              this.playlists.updatePlaylist(this.playlist)
+              if (this.mode!='add') {
+                this.playlists.updatePlaylist(this.playlist)
                   .then(() => console.log(`[PlaylistsEditor] url image update`));
+              }
             } //end handler
           }//text acept
           ]
