@@ -187,7 +187,7 @@ export class MyVideosPage implements OnInit {
     this.actionSheetCtrl.create({
       buttons: [
         {
-          text: 'Add to playlist' + video.id,
+          text: 'Add to playlist: ' + video.title,
           icon: 'star',
           handler: () => {
             console.log('Add play list');

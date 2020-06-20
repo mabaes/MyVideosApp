@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Playlist } from '../models/playlist';
-import { MemoryPlaylistsService } from '../services/memory-playlists.service';
+//import { MemoryPlaylistsService } from '../services/memory-playlists.service';
+import { RESTPlaylistsService } from '../services/restplaylists.service';
 import { AlertController, ModalController, ActionSheetController } from '@ionic/angular';
 import { PlaylistEditorPage } from '../playlist-editor/playlist-editor.page'
 import { OverlayEventDetail } from '@ionic/core';
@@ -18,7 +19,7 @@ export class PlaylistsSelectorPage implements OnInit {
 
   public myPlaylists: Playlist[] = [];
   constructor(
-    private playlist: MemoryPlaylistsService,
+    private playlist: RESTPlaylistsService,
     private changes: ChangeDetectorRef,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
@@ -46,7 +47,7 @@ export class PlaylistsSelectorPage implements OnInit {
   addVideoToPlaylist(playlist: Playlist) {  
     console.log(`Add to playlist ${playlist.id}`);
     console.log(`Add video ${this.video.id}`);
-    console.log(this.video);
+    console.log(this.video);    
     this.playlist.addVideo(playlist.id, this.video)
     .then(() => {
       // Handle error

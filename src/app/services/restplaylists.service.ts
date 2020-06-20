@@ -112,6 +112,20 @@ export class RESTPlaylistsService {
         );
     });
   }
+
+  addVideo(playlistId: string, video: Video): Promise<void> {
+    console.log('[RESTPlayListsService] addvideo()');
+    let user = this.login.getUser();
+    return new Promise((resolve, reject) => {
+      let url = this.rootUrl + `/users/${user.id}/playlists/${playlistId}/videos`;
+      let params: any = { token: this.login.getToken() };
+      this.http.post(url, video, { params: { token: this.login.getToken() } })
+        .subscribe(
+          () => { resolve(); },
+          (err) => { reject(err); }
+        );
+    });
+  }
 /*
   listVideos(playlistId: string): Promise<Video[]> {
     
