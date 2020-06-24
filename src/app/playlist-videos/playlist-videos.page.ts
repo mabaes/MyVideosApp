@@ -42,8 +42,8 @@ export class PlaylistVideosPage implements OnInit {
               .then((_video) => {
                 let _urlTmp = _video[0].url.split('/');
                 let _idVideoYouTube = _urlTmp[_urlTmp.length - 1];
-                console.log(_idVideoYouTube);
-                console.log(_video);
+                //console.log(_idVideoYouTube);
+                //console.log(_video);
                 //////////////////////////////////////////
                 this.youtubeVideos.findVideoById(_idVideoYouTube)
                   .then((_video) => {
