@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { Video } from '../models/video';
 import { ModalController, AlertController } from '@ionic/angular';
-import { VideosService } from '../services/videos.service';
+//import { VideosService } from '../services/videos.service';
+import { RESTVideosService } from '../services/restvideos.service';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -31,11 +32,13 @@ export class VideoEditorPage implements OnInit {
 
 
   constructor(private modalCtrl: ModalController, private alertCtrl:AlertController,
-    private videos: VideosService, private camera: Camera ) { }
+    private videos: RESTVideosService, private camera: Camera ) { }
 
   ngOnInit() {
     // clone video
     this.video = this.clone(this.video);
+    console.log('[videoEditorPage]');
+    console.log(this.video);
   }
 
   close() {
@@ -62,15 +65,48 @@ export class VideoEditorPage implements OnInit {
         {
           text: 'Accept',
           handler: (data) => {
-            console.log('URL ' + data.url + ' entered!!. Update Thumbnail video');
+            console.log('URL ' + data.url + ' entered!!. Update Thumbnail video');            
             //this.video.url = data.url;
             this.video.thumbnail ={
               url:data.url,
               width:100,
               height:100
             }
+           if(typeof this.video.id === "undefined") {
+             console.log('soy indefinido');
+             if(this.video.type=='' || this.video.url=='' || this.video.title==''){
+                this.alertCtrl.create({
+                  header: 'Error',
+                  message: 'Please check video url and video title. They cannot  be empty',
+                  buttons: ['OK']
+                }).then((alert) => alert.present());
+
+             } else {
+             this.videos.addVideo(this.video)
+               .then(() => console.log(`[VideoEditor] url image update`))
+               .catch((err) => {
+                 // Handle error
+                 this.alertCtrl.create({
+                   header: 'Error',
+                   message: 'Error creating video:' + JSON.stringify(err),
+                   buttons: ['OK']
+                 }).then((alert) => alert.present());
+               });
+              }
+
+           } 
+           else{
             this.videos.updateVideo(this.video)
-                .then(() => console.log(`[VideoEditor] url image update`));
+                .then(() => console.log(`[VideoEditor] url image update`))
+                .catch((err) => {
+                  // Handle error
+                  this.alertCtrl.create({
+                    header: 'Error',
+                    message: 'First you have to save your video. After you can change the image',
+                    buttons: ['OK']
+                  }).then((alert) => alert.present());
+                });
+              }
           } //end handler
         }//text acept
         ]

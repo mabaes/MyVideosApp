@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Video } from '../models/video';
-import { VideosService } from '../services/videos.service';
+//import { VideosService } from '../services/videos.service';
+import { RESTVideosService } from '../services/restvideos.service';
 import {YoutubeVideosService} from '../services/youtube-videos.service';
-import {  ModalController, ActionSheetController } from '@ionic/angular';
+import {  ModalController, ActionSheetController,AlertController } from '@ionic/angular';
 import { VideoEditorPage } from '../video-editor/video-editor.page';
 import { OverlayEventDetail } from '@ionic/core';
 
@@ -23,7 +24,8 @@ export class YoutubeVideosPage implements OnInit {
   constructor(private videos: YoutubeVideosService, 
       private changes: ChangeDetectorRef,
       private modalCtrl: ModalController,
-      private actionSheetCtrl: ActionSheetController, private listaVideos: VideosService) { }
+      private actionSheetCtrl: ActionSheetController, private listaVideos: RESTVideosService,
+      private alertCtrl:AlertController) { }
 
   ngOnInit() {
     console.log('ngOnInit YoutubeVideosPage pulsa para buscar');
@@ -115,10 +117,53 @@ export class YoutubeVideosPage implements OnInit {
 
   addPlaylist(video:Video){
     console.log(`[YoutubeVideosPage] addPlaylist(${video.id})`);
+    //this.videos.addVideo(video);
+    this.listaVideos.addVideo(video)
+      .then((videoAdd) => {
+        console.log('REspuesta addVideo:');
+        console.log(videoAdd);
+        this.modalCtrl.create({
+          component: PlaylistsSelectorPage,
+          componentProps: { video: videoAdd }
+        })
+        .then((modal) => {
+          modal.onDidDismiss()
+            .then((evt: OverlayEventDetail) => {
+              
+            });
+          modal.present();
+        });
+      }
+      )
+      .catch((err) => {
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'Error adding  video to DB:' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+    
+    
+  }
+/*
+  addPlaylist(video:Video){
+    console.log(`[YoutubeVideosPage] addPlaylist(${video.id})`);
     this.videos.addVideo(video);
     // add video a  la lista de videos
     this.listaVideos.addVideo(video)
-     .then(() => console.log(this.listaVideos));
+     .then(() => console.log(this.listaVideos))
+     //////////////////////////////////////////
+      .catch((err) => {
+        // Handle error
+        this.alertCtrl.create({
+          header: 'Error',
+          message: 'Error adding  video to playlist:' + JSON.stringify(err),
+          buttons: ['OK']
+        }).then((alert) => alert.present());
+      });
+   
+     /////////////////////////////////////////
+     
     
     this.modalCtrl.create({
       component: PlaylistsSelectorPage,
@@ -129,12 +174,13 @@ export class YoutubeVideosPage implements OnInit {
       modal.onDidDismiss()
         .then((evt: OverlayEventDetail) => {
           
-          /*if (evt && evt.data) {
-            this.videos.updateVideo(evt.data)
-              .then(() => this.searchVideos());
-          } */
+          //if (evt && evt.data) {
+            //this.videos.updateVideo(evt.data)
+              //.then(() => this.searchVideos());
+          //} 
         });
       modal.present();
     });
   }
+  */
 }

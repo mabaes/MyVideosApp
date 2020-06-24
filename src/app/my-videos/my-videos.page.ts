@@ -20,7 +20,6 @@ export class MyVideosPage implements OnInit {
   private win: any = window;
 
   constructor(
-    //rivate RESTvideos: RESTVideosService,
     private modalCtrl: ModalController, private camera: Camera,
     private alertCtrl: AlertController, private videos: RESTVideosService,
     private actionSheetCtrl: ActionSheetController, private changes: ChangeDetectorRef) { }

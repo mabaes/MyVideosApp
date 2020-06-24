@@ -31,7 +31,7 @@ export class RESTVideosService {
     let user = this.login.getUser();
     return new Promise((resolve, reject) => {
       let url = this.rootUrl + `/users/${user.id}/videos`;
-      let params: any = { token: this.login.getToken() };
+      let params: any = { token: this.login.getToken(), q:query };
       this.http.get(url, { params: params })
         .subscribe(
           (video: Video[]) => { resolve(video); },
@@ -40,6 +40,20 @@ export class RESTVideosService {
     });
   }
 
+  /** nuevo */
+ findVideoById(id:string): Promise<Video[]> {
+  console.log(`[RESTvideosService] findVideoById(${id})`);
+  let user = this.login.getUser();
+  return new Promise((resolve, reject) => {
+    let url = this.rootUrl + `/users/${user.id}/videos/${id}`;
+    let params: any = { token: this.login.getToken(), videoId:id, userId: user.id };
+    this.http.get(url, { params: params })
+      .subscribe(
+        (video: Video[]) => { resolve(video); },
+        (err) => { reject(err); }
+      );
+  });
+}
 
   updateVideo(video: Video): Promise<Video> {
     console.log('[RESTvideosService] updateVideo()');

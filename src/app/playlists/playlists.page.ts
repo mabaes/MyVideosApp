@@ -24,6 +24,7 @@ export class PlaylistsPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('lastado de playlist');
     this.playlist.findPlaylists()
       .then((playlists) => {
         this.myPlaylists = playlists;

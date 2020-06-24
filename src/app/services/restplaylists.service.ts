@@ -29,7 +29,6 @@ export class RESTPlaylistsService {
   constructor(private login: UserService, private http: HttpClient, private Videos: RESTVideosService) { }
 
 
- /** OK falta el filtro */ 
  findPlaylists(query?:string):Promise<Playlist[]> {
  console.log(`[RESTPlayListVideosService] findPlaylsits`);
  let user = this.login.getUser();
