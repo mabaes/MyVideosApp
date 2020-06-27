@@ -32,21 +32,19 @@ export class MyVideosPage implements OnInit {
   searchVideos(evt?) {
     console.log('[MyVideosPage] searchVideos()');
     let query = evt ? evt.target.value.trim() : this.query;
-    /*
-    this.RESTvideos.findVideos(query)
-    .then((videos) => {
-      this.myVideos = videos
-      console.log('[MyVideosPage] RESTsearchVideos() => ' +
-        JSON.stringify(this.myVideos));
-      this.changes.detectChanges();
-    });
-    */
     
     this.videos.findVideos(query)
       .then((videos) => {
-        this.myVideos = videos
+        let _myVideos :Video[] = [];
+        for (let _video of videos) {
+          if(_video.type=='local') {
+            _myVideos.push(_video);
+          }
+        }
+        this.myVideos = _myVideos;
         console.log('[MyVideosPage] searchVideos() => ' +
           JSON.stringify(this.myVideos));
+        
         this.changes.detectChanges();
       });
     

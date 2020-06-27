@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Youtube Videos</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar>
     <ion-searchbar [(ngModel)]="query" (keyup.enter)="searchVideos($event)">
