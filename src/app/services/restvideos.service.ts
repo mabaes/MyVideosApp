@@ -81,4 +81,19 @@ export class RESTVideosService {
         );
     });
   }
+
+  shareVideo(video: Video): Promise<void> {
+    console.log(`[RESTvideosService] shareVideo(${video.id})`);
+    let user = this.login.getUser();
+    return new Promise((resolve, reject) => {
+      ///myvideos/users/:userId/videos/:videoId/share
+      let url = this.rootUrl + `/users/${user.id}/videos/${video.id}/share`;
+      let params: any = { token: this.login.getToken(), videoId:video.id, userId: user.id };
+      this.http.get(url, { params: params })
+        .subscribe(
+          () => { resolve(); },
+            (err) => { reject(err); }
+        );
+    });
+  }
 }

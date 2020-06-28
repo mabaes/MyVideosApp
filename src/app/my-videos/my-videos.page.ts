@@ -32,7 +32,6 @@ export class MyVideosPage implements OnInit {
   searchVideos(evt?) {
     console.log('[MyVideosPage] searchVideos()');
     let query = evt ? evt.target.value.trim() : this.query;
-    
     this.videos.findVideos(query)
       .then((videos) => {
         let _myVideos :Video[] = [];
@@ -102,7 +101,7 @@ export class MyVideosPage implements OnInit {
     console.log(`[MyVideosPage] addVideo(${url})`);
     this.readVideoInfo(url)
       .then((video) => {
-        console.log(`XXreadvideoinfo ${video}`)
+        console.log(`readvideoinfo ${video}`)
         this.modalCtrl.create({
           component: VideoEditorPage,
           componentProps: { mode: 'add', video: video }
@@ -192,6 +191,14 @@ export class MyVideosPage implements OnInit {
           }
         },
         {
+          text: 'Share : ' + video.title,
+          icon: 'share',
+          handler: () => {
+            console.log('sahre video');
+            this.shareVideo(video);
+          }
+        },
+        {
           text: 'Play',
           icon: 'play',
           handler: () => {
@@ -221,11 +228,31 @@ export class MyVideosPage implements OnInit {
     }).then((actionSheet) => actionSheet.present());
   } //showmenu
 
+  shareVideo(video: Video) {
+    console.log(`[MyVideosPage] share(${video.id})`);
+    this.alertCtrl.create({
+      header: 'Share video',
+      message: 'You will share with all users',
+      buttons: [
+        {
+          text: 'Cancel', role: 'cancel', handler: () => {
+            console.log('Cancel clicked share');
+          }
+        },
+        {
+          text: 'Accept', handler: () => {
+            this.videos.shareVideo(video)
+              .then(() => this.searchVideos());
+          }
+        }
+      ]
+    }).then((alert) => alert.present());
+  }
+
   addPlaylist(video:Video){
     console.log(`[MyVideosPage] addPlaylist(${video.id})`);
     this.modalCtrl.create({
-      component: PlaylistsSelectorPage,
-      //componentProps: { idVideo: video.id }
+      component: PlaylistsSelectorPage,      
       componentProps: { video: video }
     })
     .then((modal) => {

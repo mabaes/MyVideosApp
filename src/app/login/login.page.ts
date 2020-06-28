@@ -19,13 +19,20 @@ export class LoginPage implements OnInit {
     private alertCtrl: AlertController, private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    this.router.routeReuseStrategy.shouldReuseRoute =()=> {
+      return false;
+    }
   }
   doLogin() {
     console.log('[LoginPage] doLogin()');
     //this.router.navigateByUrl('/tabs');
     
     this.login.login(this.user, this.password)    
-      .then(() => { this.router.navigateByUrl('/tabs'); })
+      //{skipLocationChange: true }
+      .then(() => { 
+        this.user ='';
+        this.password='';
+        this.router.navigateByUrl('/tabs'); })
       .catch((err) => {
         this.alertCtrl.create({
           header: 'Authentication error',
